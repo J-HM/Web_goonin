@@ -59,28 +59,28 @@
       </div>
     </v-footer>
 
-    <!-- <v-overlay :dark='false' :value="overlay_1" class='align-end justify-start'>
+    <v-overlay :dark='false' :value="overlay_1" class='align-end justify-start'>
       <Tendinous @back1='back' class='ma-4'></Tendinous>
     </v-overlay>
       
     <v-overlay :dark='false' :value="overlay_2" class='align-end justify-start'>
       <Evaluation @back2='back' class='ma-4'></Evaluation>
-    </v-overlay> -->
+    </v-overlay>
   </v-app>
 </template>
 
 <script>
   import Basic from './components/Basic';
   import Detail from './components/Detail';
-  //import Tendinous from './components/interactions/Tendinous';
-  //import Evaluation from './components/interactions/Evaluation';
+  import Tendinous from './components/interactions/Tendinous';
+  import Evaluation from './components/interactions/Evaluation';
   
   export default {
     components: {
       Basic,
       Detail,
-      //Tendinous,
-      //Evaluation
+      Tendinous,
+      Evaluation
     },
     
     data: () => ({
@@ -95,13 +95,13 @@
       model: null,
       
       items: [{
-          text: '소스코드 ',
+          text: '소스보기',
           icon: 'mdi-code-braces'
         }, {
-          text: '건의하기 ',
+          text: '건의하기',
           icon: 'mdi-message-text-outline'
         }, {
-          text: '평가하기 ',
+          text: '평가하기',
           icon: 'mdi-star-outline'
         },
       ],

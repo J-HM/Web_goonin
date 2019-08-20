@@ -31,7 +31,7 @@
       <v-divider></v-divider>
       <v-textarea
         v-model="content"
-        label="문의사항"
+        label="건의사항"
         counter
         maxlength="150"
         full-width 
@@ -64,7 +64,7 @@
     
     methods: { 
       send() {
-        db.collection("문의").add({
+        db.collection("건의").add({
           reply: this.reply,
           title: this.title,
           content: this.content,
