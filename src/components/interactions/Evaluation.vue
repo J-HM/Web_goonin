@@ -1,36 +1,36 @@
 <template>
-	<v-card width=400>
-		<v-toolbar flat color="primary">
-			<v-btn @click="back" icon class='mr-n5'>
-				<v-icon>mdi-arrow-left-thick</v-icon>
-			</v-btn>
-
-			<v-spacer></v-spacer>
-
-			<v-btn @click="send" icon>
-				<v-icon>mdi-send</v-icon>
-			</v-btn>
-		</v-toolbar>
-
-		<v-form class='mx-1'>
-			<v-rating 
-				background-color='secondary' 
-				color='secondary' 
-				half-increments 
-				large class='text-center' 
-				v-model="rating"
-			></v-rating>
-			<v-divider class='mx-3'></v-divider>
-			<v-textarea 
-				v-model="content" 
-				label="한줄평" 
-				counter 
-				maxlength="100" 
-				full-width 
-				single-line
-			></v-textarea>
-		</v-form>
-	</v-card>
+	<v-col cols=8 sm=12>
+		<v-card width=400>
+			<v-toolbar flat color="primary">
+				<v-btn @click="back" icon class='mr-n5'>
+					<v-icon>mdi-arrow-left-thick</v-icon>
+				</v-btn>
+				<v-spacer></v-spacer>
+				<v-btn @click="send" icon>
+					<v-icon>mdi-send</v-icon>
+				</v-btn>
+			</v-toolbar>
+			<v-form class='mx-1'>
+				<v-rating 
+					background-color='secondary' 
+					color='secondary' 
+					half-increments 
+					large 
+					class='text-center' 
+					v-model="rating"
+				></v-rating>
+				<v-divider class='mx-3'></v-divider>
+				<v-textarea 
+					v-model="content" 
+					label="한줄평 (선택)" 
+					counter 
+					maxlength="100" 
+					full-width 
+					single-line
+				></v-textarea>
+			</v-form>
+		</v-card>
+	</v-col>
 </template>
 
 <script>

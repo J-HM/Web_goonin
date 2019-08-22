@@ -1,21 +1,30 @@
-# GOONIN
-
-
----
+# GOONIN (1.0.0)
+Calculate Military discharge day, promotion day, salary
+And provide Current Progress, Number of Days by Class
 
 ## Project url  
-[GOONIN](https://goonin.info/)  
-[GOONIN source](https://https://goor.me/AVLN5/)
+[goonin.info](https://goonin.info/) 
+
+[GOONIN project](https://https://goor.me/AVLN5/)
 
 
 
-## Version log
-- 1.0.
-  - 1 (19.08.21)
+## What i use
+* Node
+	+ npm
 	
-		- 2 (19.08.21)
-	
-- 1.1.
-  - 1 (19.08.14)
-	
-	- 2 (19.08.21)
+
+* Vue 
+	+ vuetify
+
+
+* Firebase 
+  + hosting
+  + firestore
+
+
+* Etc 
+	+ moment.js
+	+ chart.js
+
+

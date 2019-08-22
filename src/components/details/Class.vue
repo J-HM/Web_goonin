@@ -1,165 +1,178 @@
 <template>
-  <v-card elevation='3'>
-    <v-row>
-      <v-col cols=12 >
-        <Class_chart style='height: 110px' class='mb-n6 mt-1' :chart-data='datacollection'></Class_chart>
-        <div class='title mb-n6 text-center'>{{ which_class(0) + which_grade(0) }}</div>
-      </v-col>
-      
-      <v-col cols=12>
-        <v-row justify='center' v-show='view'> 
-          <v-col cols=5>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <div v-on="on" style='text-align: center'> {{ which_grade(0) }}
-                  <v-progress-linear
-                    color="#64B5F6"
-                    height="15"
-                    rounded
-                    :value="next_class_2.percent"
-                    class='caption'
-                  >{{ next_class_2.percent + '%' }}</v-progress-linear>
-                </div>
-              </template>
-              <span>{{ which_grade(1) + '호봉까지' + next_class_2.days + '일' }}</span>
-            </v-tooltip>
+	<v-card elevation='3'>
+		<v-row>
+			<v-col cols=12>
+				<Class_chart 
+					style='height: 110px' 
+					class='mb-n6 mt-1' 
+					:chart-data='datacollection'
+				></Class_chart>
+				<div class='title mb-n6 text-center'>{{ which_class(0) + which_grade(0) }}</div>
+			</v-col>
 
-          </v-col>
-                
-          <v-col cols=5>      
-            
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <div v-on="on" style='text-align: center'> {{ which_class(0) }}
-                  <v-progress-linear
-                    color="#7986CB"
-                    height="15"
-                    rounded
-                    :value="next_class_1.percent"
-                    class='caption'
-                    v-on="on"
-                  >{{ next_class_1.percent + '%' }}</v-progress-linear>
-                </div>  
-              </template>
-              <span>{{ which_class(1) + '까지' + next_class_1.days + '일' }}</span>
-            </v-tooltip>
-            
-          </v-col>
+			<v-col cols=12>
+				<v-row justify='center' v-show='view'>
+					<v-col cols=5>
+						<v-tooltip bottom>
+							<template v-slot:activator="{ on }">
+								<div v-on="on" style='text-align: center'> {{ which_grade(0) }}
+									<v-progress-linear 
+										color="#64B5F6" 
+										height="15" 
+										rounded 
+										:value="next_class_2.percent" 
+										class='caption'
+									>{{ next_class_2.percent + '%' }}</v-progress-linear>
+								</div>
+							</template>
+							<span>{{ which_grade(1) + '호봉까지' + next_class_2.days + '일' }}</span>
+						</v-tooltip>
 
-        </v-row>
-      </v-col>
-    </v-row>
-  </v-card>
+					</v-col>
+
+					<v-col cols=5>
+
+						<v-tooltip bottom>
+							<template v-slot:activator="{ on }">
+								<div v-on="on" style='text-align: center'> {{ which_class(0) }}
+									<v-progress-linear 
+										color="#7986CB" 
+										height="15" 
+										rounded 
+										:value="next_class_1.percent"
+										class='caption' 
+										v-on="on"
+										>{{ next_class_1.percent + '%' }}</v-progress-linear>
+								</div>
+							</template>
+							<span>{{ which_class(1) + '까지' + next_class_1.days + '일' }}</span>
+						</v-tooltip>
+
+					</v-col>
+
+				</v-row>
+			</v-col>
+		</v-row>
+	</v-card>
 </template>
 
 <script>
-  import Class_chart from './Class_chart'
-  import moment from 'moment';
-  
-  export default {
-    props: [ 'start_date', 'last_date' ],
-    components: { Class_chart },
-    
-    computed: {
-      current_class () {
-        if (this.class_arr[0] > this.current_date)      { return 0 } 
-        else if (this.class_arr[1] > this.current_date) { return 1 } 
-        else if (this.class_arr[2] > this.current_date) { return 2 } 
-        else if (this.class_arr[3] > this.current_date) { return 3 } 
-        else if (this.class_arr[4] > this.current_date) { return 4 } 
-        else { return 5 }
-      },
-      
-      which_class () {
-        return (val) => {
-            switch ( this.current_class + val ) {
-            case 0: return '입대전'
-            case 1: return '이병' 
-            case 2: return '일병'
-            case 3: return '상병'
-            case 4: return '병장'
-            default: return '전역'
-          }
-        }
-      },
-      
-      which_grade () {
-        return (val) => {
-          if (this.current_class == 5 || this.current_class == 0) { return '' }
-          else {
-            var grade = this.current_date.diff(this.class_arr[this.current_class - 1 ], 'months') + 1 + val;
-            if (grade == 8) {
-              if (this.current_class == 2) {return '상병1'} 
-              else {return '병장1'} } 
-            else {return grade}
-          }
-        }
-      },
-      
-      percent () {
-        var percent_t = (this.current_date - this.start_date) / (this.last_date - this.start_date)
-        if (percent_t >= 1) { return 100 }
-        else if (percent_t <= 0) { return 0 }
-        else { return percent_t * 100 }
-      },
-      
-      view () {
-        if (this.percent == 100) { return false }
-        else if (this.percent == 0) { return false }
-        else { return true }
-      },
-      
-      next_class_1 () {
-        var past = this.current_date.diff(this.class_arr[this.current_class - 1], 'days') 
-        var sum = this.class_diff[this.current_class - 1]
-        return {percent: (past / sum * 100).toFixed(2), days: sum - past}
-      },
-      
-      next_class_2 () {
-        var past = this.current_date.diff((moment().startOf('month')), 'days')
-        var sum = moment().daysInMonth()
-        return {percent: (( past / sum ) * 100).toFixed(2), days: sum - past}
-      },
-      
-      class_arr () {
-        var grade_two  = moment(this.start_date).add(4, 'month').startOf('month')
-        var grade_three= moment(this.start_date).add(11, 'month').startOf('month')
-        var grade_four = moment(this.start_date).add(18, 'month').startOf('month')
-        return [this.start_date, grade_two, grade_three, grade_four, this.last_date]
-      },
-      
-      class_diff () {
-        return [this.class_arr[1].diff(this.class_arr[0], 'days'), // 이병기간
-               this.class_arr[2].diff(this.class_arr[1], 'days'), // 일병기간
-               this.class_arr[3].diff(this.class_arr[2], 'days'), // 상병기간
-               this.class_arr[4].diff(this.class_arr[3], 'days')] // 병장기간
-      },
-      
-      progress_arr () {
-        return [Math.round(this.percent), Math.round(100-this.percent)]
-      },
-
-      datacollection () {
-        return {
-          datasets: [{
-            hoverBorderWidth: 5,
-            backgroundColor: ['#90CAF9a9', '#039BE5a9', '#4FC3F7a9', '#80DEEAa9'],
-            borderWidth: 4,
-            data: this.class_diff,
-            labels: [' 이병', ' 일병', ' 상병', ' 병장' ],
-          }, {
-            hoverBorderWidth: 4,
-            backgroundColor: ['#9575CDa9', '#7986CBa9'],
-            borderWidth: 4,
-            data: this.progress_arr,
-            labels: [' 지난 군생활', ' 남은 군생활'],
-          }]
-        }
-      },
-    },
-    
-    data: () => ({
-      current_date: moment(),
-    }),
-  }
+	import Class_chart from './Class_chart'
+	import moment from 'moment';
+	export default {
+		props: ['start_date', 'last_date'],
+		
+		components: {
+			Class_chart
+		},
+		
+		computed: {
+			current_class() {
+				if (this.class_arr[0] > this.current_date) { return 0 } 
+				else if (this.class_arr[1] > this.current_date) { return 1 } 
+				else if (this.class_arr[2] > this.current_date) { return 2 } 
+				else if (this.class_arr[3] > this.current_date) { return 3 } 
+				else if (this.class_arr[4] > this.current_date) { return 4 } 
+				else { return 5 }
+			},
+			
+			which_class() {
+				return (val) => {
+					switch (this.current_class + val) {
+						case 0: return '입대전'
+						case 1: return '이병'
+						case 2: return '일병'
+						case 3: return '상병'
+						case 4: return '병장'
+						default: return '전역'
+					}
+				}
+			},
+			
+			which_grade() {
+				return (val) => {
+					if (this.current_class == 5 || this.current_class == 0) { return '' } 
+					else {
+						var grade = this.current_date.diff(this.class_arr[this.current_class - 1], 'months') + 1 + val;
+						if (grade == 8) {
+							if (this.current_class == 2) { return '상병1' } 
+							else { return '병장1' }
+						} else { return grade }
+					}
+				}
+			},
+			
+			percent() {
+				var percent_t = (this.current_date - this.start_date) / (this.last_date - this.start_date)
+				if (percent_t >= 1) { return 100 } 
+				else if (percent_t <= 0) { return 0 } 
+				else { return percent_t * 100 }
+			},
+			
+			view() {
+				if (this.percent == 100) { return false } 
+				else if (this.percent == 0) { return false } 
+				else { return true }
+			},
+			
+			next_class_1() {
+				var past = this.current_date.diff(this.class_arr[this.current_class - 1], 'days')
+				var sum = this.class_diff[this.current_class - 1]
+				return {
+					percent: (past / sum * 100).toFixed(2),
+					days: sum - past
+				}
+			},
+			
+			next_class_2() {
+				var past = this.current_date.diff((moment().startOf('month')), 'days')
+				var sum = moment().daysInMonth()
+				return {
+					percent: ((past / sum) * 100).toFixed(2),
+					days: sum - past
+				}
+			},
+			
+			class_arr() {
+				var grade_two = moment(this.start_date).add(4, 'month').startOf('month')
+				var grade_three = moment(this.start_date).add(11, 'month').startOf('month')
+				var grade_four = moment(this.start_date).add(18, 'month').startOf('month')
+				return [this.start_date, grade_two, grade_three, grade_four, this.last_date]
+			},
+			
+			class_diff() {
+				return [this.class_arr[1].diff(this.class_arr[0], 'days'), // 이병기간
+					this.class_arr[2].diff(this.class_arr[1], 'days'), // 일병기간
+					this.class_arr[3].diff(this.class_arr[2], 'days'), // 상병기간
+					this.class_arr[4].diff(this.class_arr[3], 'days')
+				] // 병장기간
+			},
+			
+			progress_arr() {
+				return [Math.round(this.percent), Math.round(100 - this.percent)]
+			},
+			
+			datacollection() {
+				return {
+					datasets: [{
+						hoverBorderWidth: 5,
+						backgroundColor: ['#90CAF9a9', '#039BE5a9', '#4FC3F7a9', '#80DEEAa9'],
+						borderWidth: 4,
+						data: this.class_diff,
+						labels: [' 이병', ' 일병', ' 상병', ' 병장'],
+					}, {
+						hoverBorderWidth: 4,
+						backgroundColor: ['#9575CDa9', '#7986CBa9'],
+						borderWidth: 4,
+						data: this.progress_arr,
+						labels: [' 지난 군생활', ' 남은 군생활'],
+					}]
+				}
+			},
+		},
+		
+		data: () => ({
+			current_date: moment(),
+		}),
+	}
 </script>
