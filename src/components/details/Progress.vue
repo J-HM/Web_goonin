@@ -10,7 +10,7 @@
 							:size="progress_size" 
 							:value="percent" 
 							width="15" 
-							color="#039BE5dF">
+							color="#039BE5">
 							<span 
 								class="font-weight-bold title" 
 								:class="{'subtitle-1': $vuetify.breakpoint.xs}"

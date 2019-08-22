@@ -12,18 +12,14 @@
 							</template>
 							<span>병무청 자료를 기반으로 계산되며 정확하지 않을 수 있음</span>
 						</v-tooltip>
-
 						<Basic @finish="show_detail" />
-
 						<v-expand-transition>
 							<Detail v-if="show" :sort='sort' :date='date' />
 						</v-expand-transition>
-
 					</v-card>
 				</v-col>
 			</v-row>
 		</v-container>
-
 		<v-footer>
 			<v-menu offset-y top>
 				<template v-slot:activator="{ on }">
@@ -44,7 +40,6 @@
 					</v-list-item-group>
 				</v-list>
 			</v-menu>
-
 			<v-spacer></v-spacer>
 			<div>&copy; 2019.
 				<v-tooltip top>
@@ -56,17 +51,13 @@
 				All rights reserved.
 			</div>
 		</v-footer>
-
-
 			<v-overlay :dark='false' :value="overlay_1" class='align-end justify-start'>
 				<Tendinous @back1='back' class='ma-4'></Tendinous>
 			</v-overlay>
-
 			<v-overlay :dark='false' :value="overlay_2" class='align-end justify-start'>
 				<Evaluation @back2='back' class='ma-4'></Evaluation>
 			</v-overlay>
 		
-
 	</v-app>
 </template>
 

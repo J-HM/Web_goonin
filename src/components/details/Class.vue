@@ -59,6 +59,7 @@
 <script>
 	import Class_chart from './Class_chart'
 	import moment from 'moment';
+	
 	export default {
 		props: ['start_date', 'last_date'],
 		
@@ -156,13 +157,13 @@
 				return {
 					datasets: [{
 						hoverBorderWidth: 5,
-						backgroundColor: ['#90CAF9a9', '#039BE5a9', '#4FC3F7a9', '#80DEEAa9'],
+						backgroundColor: ['#90CAF9', '#039BE5', '#4FC3F7', '#80DEEA'],
 						borderWidth: 4,
 						data: this.class_diff,
 						labels: [' 이병', ' 일병', ' 상병', ' 병장'],
 					}, {
 						hoverBorderWidth: 4,
-						backgroundColor: ['#9575CDa9', '#7986CBa9'],
+						backgroundColor: ['#9575CD', '#7986CB'],
 						borderWidth: 4,
 						data: this.progress_arr,
 						labels: [' 지난 군생활', ' 남은 군생활'],

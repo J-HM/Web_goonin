@@ -11,7 +11,7 @@
 				<Class :last_date='last_date' :start_date='start_date' />
 			</v-col>
 
-			<v-col v-if='false' cols=12 class='text-center ma-n2'>
+			<v-col cols=12 class='text-center ma-n2'>
 				<v-btn icon color='#26C6DA' @click="moeny_view">
 					<v-icon :class='icon'>mdi-triangle-outline</v-icon>
 				</v-btn>
