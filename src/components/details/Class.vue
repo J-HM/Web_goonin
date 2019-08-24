@@ -80,11 +80,11 @@
 			which_class() {
 				return (val) => {
 					switch (this.current_class + val) {
-						case 0: return '입대전'
-						case 1: return '이병'
-						case 2: return '일병'
-						case 3: return '상병'
-						case 4: return '병장'
+						case  0: return '입대전'
+						case  1: return '이병'
+						case  2: return '일병'
+						case  3: return '상병'
+						case  4: return '병장'
 						default: return '전역'
 					}
 				}
