@@ -10,7 +10,7 @@
 									<v-icon>mdi-information</v-icon>
 								</v-btn>
 							</template>
-							<span>병무청 자료를 기반으로 계산되며 정확하지 않을 수 있음</span>
+							<span>병무청 자료를 기반으로 계산되며 <br> 결과는 다소 오차가 있을 수 있음 <br> 계산된 결과는 행정효력이 없음</span>
 						</v-tooltip>
 						<Basic @finish="show_detail" />
 						<v-expand-transition>

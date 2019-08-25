@@ -7,7 +7,7 @@
 					class='mb-n6 mt-1' 
 					:chart-data='datacollection'
 				></Class_chart>
-				<div class='title mb-n6 text-center'>{{ which_class(0) + which_grade(0) }}</div>
+				<div class='title mb-n6 text-center'>{{ which_class(0) + ' ' + which_grade(0) }}</div>
 			</v-col>
 
 			<v-col cols=12>
@@ -15,7 +15,7 @@
 					<v-col cols=5>
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on }">
-								<div v-on="on" style='text-align: center'> {{ which_grade(0) }}
+								<div v-on="on" style='text-align: center'> {{ which_grade(0) + '호봉' }}
 									<v-progress-linear 
 										color="#64B5F6" 
 										height="15" 
@@ -157,13 +157,13 @@
 				return {
 					datasets: [{
 						hoverBorderWidth: 5,
-						backgroundColor: ['#90CAF9', '#039BE5', '#4FC3F7', '#80DEEA'],
+						backgroundColor: ['#64B5F6', '#4FC3F7', '#4DD0E1', '#80DEEA'],
 						borderWidth: 4,
 						data: this.class_diff,
 						labels: [' 이병', ' 일병', ' 상병', ' 병장'],
 					}, {
 						hoverBorderWidth: 4,
-						backgroundColor: ['#9575CD', '#7986CB'],
+						backgroundColor: ['#B39DDB', '#7986CB'],
 						borderWidth: 4,
 						data: this.progress_arr,
 						labels: [' 지난 군생활', ' 남은 군생활'],

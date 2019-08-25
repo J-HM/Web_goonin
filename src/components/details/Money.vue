@@ -8,28 +8,34 @@
 					:chart-data='datacollection'
 				></Money_chart>
 			</v-col>
-			<v-col cols=11 lg=4>
-				<div class='mb-n1 body-2'> 군적금: {{ saving_month / 10000 }}만 </div>
-				
+			<v-col cols=11 lg=5>
 				<v-slider
+					label="군적금"
+					:rules="rules"
+					:hint="saving_month / 10000"
+					ticks
 					color='#4DD0E1'
 					track-color='#E0F7FA'
 					append-icon="mdi-plus-box-outline"
 					prepend-icon="mdi-minus-box-outline"
 					@click:append="saving_up"
-					@click:prepend="saving_up"
+					@click:prepend="saving_down"
 					max="400000" 
 					step="10000"
 					v-model="saving_month"
 				></v-slider>
-				<div class='my-n1 body-2'> 생활비: {{ expense_month / 10000 }}만 </div>
+				
 				<v-slider
+					:rules="rules"
+					label="생활비"
+					:hint="expense_month / 10000"
 					color='#80CBC4'
+					ticks
 					track-color='#E0F2F1'
 					append-icon="mdi-plus-box-outline"
 					prepend-icon="mdi-minus-box-outline"
 					@click:append="expense_up"
-					@click:prepend="expense_up"
+					@click:prepend="expense_down"
 					step="10000" 
 					max="500000" 
 					v-model="expense_month"
@@ -65,22 +71,24 @@
 					<v-col>
 						<v-card outlined>
 						<v-card-text>
-							<div>군생활 끝나면</div>
+							<div> 군생활 생활비
+								<v-icon class='mdi-18px'>mdi-information-outline</v-icon>
+							</div>
 							
 							<span class='title black--text'>
-								{{ print_money(salary_arr[salary_arr.length - 1] - expense_arr[expense_arr.length - 1]) }}
+								{{ print_money(expense_arr[expense_arr.length - 1]) }}
 							</span>
 							
 						</v-card-text>
 						</v-card>
 					</v-col>
-				
+					
 					<v-col>
 						<v-card dark flat color="#64B5F6" class="white--text">
 						<v-card-text>
-							<div>군생활이 끝나고</div>
+							<div>군생활 끝나면</div>
 							<span class="white--text title">
-								{{ print_money(saving_arr[saving_arr.length - 1]) }}
+								{{ print_money(salary_arr[salary_arr.length - 1] - minus_arr[expense_arr.length - 1]) }}
 							</span>
 						</v-card-text>
 						</v-card>
@@ -106,6 +114,12 @@
 		},
 			
 		computed: {
+			rules () {
+				return [
+					(this.salary_arr[this.salary_arr.length - 1] - this.minus_arr[this.expense_arr.length - 1]) > 0|| '마이너스 입니다',
+				]
+			},
+			
 			value() {
 				return null
 			},
@@ -162,10 +176,20 @@
 				var expense_arr = new Array()
 				var expense_sum = 0
 				for (var i = 0; i < this.salary_days.length; i++) {
-					expense_sum += this.expense_month + this.saving_month
+					expense_sum += this.expense_month
 					expense_arr.push(expense_sum)
 				}
 				return expense_arr
+			},
+			
+			minus_arr() {
+				var minus_arr = new Array()
+				var minus_sum = 0
+				for (var i = 0; i < this.salary_days.length; i++) {
+					minus_sum += this.expense_month + this.saving_month
+					minus_arr.push(minus_sum)
+				}
+				return minus_arr
 			},
 			
 			datacollection () {
@@ -184,7 +208,7 @@
 						borderColor: '#C5CAE9',
 						pointRadius: 1,
 					}, {
-						data: this.expense_arr,
+						data: this.minus_arr,
 						backgroundColor: '#B2DFDB33',
 						fill: true,
 						borderColor: '#D1C4E9',
@@ -204,10 +228,24 @@
 			
 			print_money: function (money) {
 				return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-			}
+			},
+			
+			saving_up () {
+				this.saving_month += 10000
+			},
+			saving_down () {
+				this.saving_month -= 10000
+			},
+			expense_up () {
+				this.expense_month += 10000
+			},
+			expense_down () {
+				this.expense_month -= 10000
+			},
 		},
 		
 		data: () => ({
+			
 			current_date: moment(),
 			saving_month: 0,
 			expense_month: 0,
