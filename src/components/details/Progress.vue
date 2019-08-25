@@ -1,7 +1,8 @@
 <template>
 	<v-card elevation='3'>
-		<v-row align='center' justify='center'>
-			<v-col class='text-center' cols=5 id='progress'>
+		<v-row align='center' justify='space-around' class='px-4'>
+			
+			<div class='text-center py-3 pr-1'>
 				<v-tooltip top>
 					<template v-slot:activator="{ on }">
 						<v-progress-circular 
@@ -10,17 +11,15 @@
 							:size="progress_size" 
 							:value="percent" 
 							width="15" 
-							color="#7986CB">
-							<span 
-								class="font-weight-bold title" 
-								:class="{'subtitle-1': $vuetify.breakpoint.xs}"
-							>{{ percent.toFixed(2) + '%' }}</span>
+							color="#7986CB"
+						><span class="font-weight-bold title":class="{'subtitle-1': $vuetify.breakpoint.xs}">{{ percent.toFixed(2) + '%' }}</span>
 						</v-progress-circular>
 					</template>
 					<span>{{ detail_percent }}</span>
 				</v-tooltip>
-			</v-col>
-			<v-col class='text-center' cols=6>
+			</div>
+
+			<div class='text-center py-3'>
 				<div v-if='view_1'>
 					<v-tooltip top>
 						<template v-slot:activator="{ on }">
@@ -57,7 +56,7 @@
 						<span>{{ tooltip[3] }}</span>
 					</v-tooltip>
 				</div>
-			</v-col>
+			</div>
 		</v-row>
 	</v-card>
 </template>
@@ -94,8 +93,9 @@
 			
 			progress_size () {
 				switch (this.$vuetify.breakpoint.name) {
-					case 'xs': return 100;
+					case 'xs': return 110;
 					case 'sm': return 110;
+					case 'md': return 115;
 					default: return 130;
 				}
 			},

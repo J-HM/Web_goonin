@@ -3,7 +3,7 @@
 		<v-row align='center' justify='center'>
 
 			<v-col cols=12 md=12 lg=6>
-				<Last :last_date='last_date' :start_date='start_date' class='mb-4' />
+				<Last :last_date='last_date' :start_date='start_date' class='mb-3' />
 				<Progress :last_date='last_date' :start_date='start_date' :cut_day='cut_day' />
 			</v-col>
 

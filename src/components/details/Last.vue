@@ -1,6 +1,12 @@
 <template>
 	<v-card elevation='3'>
-		<v-card-text style='text-align:center'>{{ start_date_dispay + ' ~ ' + last_date_dispay }}</v-card-text>
+		<v-card-text>
+			<v-row align='center' justify='center'>
+				<span>{{ start_date_dispay }}</span>
+				&nbsp ~ &nbsp
+				<span>{{ last_date_dispay }}</span>
+			</v-row>
+		</v-card-text>
 	</v-card>
 </template>
 

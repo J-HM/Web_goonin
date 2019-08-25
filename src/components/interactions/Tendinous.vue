@@ -3,7 +3,7 @@
 		<v-card width=400>
 			<v-toolbar flat color="primary">
 				<v-btn @click="back" icon class='mr-n5'>
-					<v-icon>mdi-arrow-leftC-thick</v-icon>
+					<v-icon>mdi-arrow-left-thick</v-icon>
 				</v-btn>
 				<v-spacer></v-spacer>
 				<v-btn @click="send" icon>

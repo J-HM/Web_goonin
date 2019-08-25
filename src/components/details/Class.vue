@@ -4,14 +4,14 @@
 			<v-col cols=12>
 				<Class_chart 
 					style='height: 110px' 
-					class='mb-n6 mt-1' 
+					class='mb-n6 mt-1 pa-1' 
 					:chart-data='datacollection'
 				></Class_chart>
 				<div class='title mb-n6 text-center'>{{ which_class(0) + ' ' + which_grade(0) }}</div>
 			</v-col>
 
 			<v-col cols=12>
-				<v-row justify='center' v-show='view'>
+				<v-row justify='center' v-show='view' class='mb-3'>
 					<v-col cols=5>
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on }">
@@ -31,7 +31,6 @@
 					</v-col>
 
 					<v-col cols=5>
-
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on }">
 								<div v-on="on" style='text-align: center'> {{ which_class(0) }}

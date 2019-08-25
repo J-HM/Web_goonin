@@ -10,9 +10,10 @@
 			</v-col>
 			<v-col cols=11 lg=5>
 				<v-slider
+					class='mb-5'
+					thumb-label="always"
 					label="군적금"
 					:rules="rules"
-					:hint="saving_month / 10000"
 					ticks
 					color='#4DD0E1'
 					track-color='#E0F7FA'
@@ -23,12 +24,13 @@
 					max="400000" 
 					step="10000"
 					v-model="saving_month"
-				></v-slider>
+				><template v-slot:thumb-label="props">{{ thumb(props.value) }}</template>
+				</v-slider>
 				
 				<v-slider
+					thumb-label="always"
 					:rules="rules"
 					label="생활비"
-					:hint="expense_month / 10000"
 					color='#80CBC4'
 					ticks
 					track-color='#E0F2F1'
@@ -39,7 +41,8 @@
 					step="10000" 
 					max="500000" 
 					v-model="expense_month"
-				></v-slider>
+				><template v-slot:thumb-label="props">{{ thumb(props.value) }}</template>
+				</v-slider>
 			</v-col>
 				
 			<v-col cols=11 lg=6 class='mt-n5'>
@@ -166,7 +169,7 @@
 				var saving_arr = new Array()
 				var saving_sum = 0
 				for (var i = 0; i < this.salary_days.length; i++) {
-					saving_sum += this.saving_month
+					saving_sum += this.saving_month * 1.05
 					saving_arr.push(saving_sum)
 				}
 				return saving_arr
@@ -241,6 +244,10 @@
 			},
 			expense_down () {
 				this.expense_month -= 10000
+			},
+			
+			thumb (val) {
+				return val/10000 + '만'
 			},
 		},
 		
