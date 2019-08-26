@@ -3,7 +3,7 @@
 		<v-row justify='center' align='center'>
 			<v-col cols=11>
 				<Money_chart
-					class='mt-2'
+					class='my-2 mt-lg-5'
 					style='height: 200px' 
 					:chart-data='datacollection'
 				></Money_chart>
@@ -51,9 +51,9 @@
 						<v-card dark flat color="#9575CD" class="white--text">
 						<v-card-text>
 							<div class="">군생활 총월급</div>
-							<span class="white--text title">
+							<span class="white--text title" :class="{'subtitle-1': $vuetify.breakpoint.xs}">
 								{{ print_money(salary_arr[salary_arr.length - 1]) }}
-							</span>
+							</span> 
 						</v-card-text>
 						</v-card>
 					</v-col>
@@ -62,7 +62,7 @@
 						<v-card outlined>
 						<v-card-text>
 							<div>군적금 수령액</div>
-							<span class='title black--text'>
+							<span class='title black--text' :class="{'subtitle-1': $vuetify.breakpoint.xs}">
 								{{ print_money(saving_arr[saving_arr.length - 1]) }}
 							</span>
 						</v-card-text>
@@ -74,11 +74,9 @@
 					<v-col>
 						<v-card outlined>
 						<v-card-text>
-							<div> 군생활 생활비
-								<v-icon class='mdi-18px'>mdi-information-outline</v-icon>
-							</div>
+							<div> 군생활 생활비</div>
 							
-							<span class='title black--text'>
+							<span class='title black--text' :class="{'subtitle-1': $vuetify.breakpoint.xs}">
 								{{ print_money(expense_arr[expense_arr.length - 1]) }}
 							</span>
 							
@@ -90,7 +88,7 @@
 						<v-card dark flat color="#64B5F6" class="white--text">
 						<v-card-text>
 							<div>군생활 끝나면</div>
-							<span class="white--text title">
+							<span class="white--text title" :class="{'subtitle-1': $vuetify.breakpoint.xs}">
 								{{ print_money(salary_arr[salary_arr.length - 1] - minus_arr[expense_arr.length - 1]) }}
 							</span>
 						</v-card-text>
@@ -118,9 +116,9 @@
 			
 		computed: {
 			rules () {
-				return [
-					(this.salary_arr[this.salary_arr.length - 1] - this.minus_arr[this.expense_arr.length - 1]) > 0|| '마이너스 입니다',
-				]
+				var salary_sum = this.salary_arr[this.salary_arr.length - 1]
+				var minus_sum = this.minus_arr[this.minus_arr.length - 1]
+				return [(salary_sum - minus_sum) > 0|| '마이너스 입니다']
 			},
 			
 			value() {
@@ -189,7 +187,7 @@
 				var minus_arr = new Array()
 				var minus_sum = 0
 				for (var i = 0; i < this.salary_days.length; i++) {
-					minus_sum += this.expense_month + this.saving_month
+					minus_sum += this.expense_month + this.saving_month * 1.05
 					minus_arr.push(minus_sum)
 				}
 				return minus_arr
@@ -247,7 +245,7 @@
 			},
 			
 			thumb (val) {
-				return val/10000 + '만'
+				return val / 10000 + '만'
 			},
 		},
 		

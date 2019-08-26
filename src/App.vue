@@ -51,6 +51,7 @@
 				All rights reserved.
 			</div>
 		</v-footer>
+
 			<v-overlay :dark='false' :value="overlay_1" class='align-end justify-start'>
 				<Tendinous @back1='back' class='ma-4'></Tendinous>
 			</v-overlay>

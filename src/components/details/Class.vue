@@ -27,9 +27,7 @@
 							</template>
 							<span>{{ which_grade(1) + '호봉까지' + next_class_2.days + '일' }}</span>
 						</v-tooltip>
-
 					</v-col>
-
 					<v-col cols=5>
 						<v-tooltip bottom>
 							<template v-slot:activator="{ on }">

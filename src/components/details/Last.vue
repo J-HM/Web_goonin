@@ -3,7 +3,7 @@
 		<v-card-text>
 			<v-row align='center' justify='center'>
 				<span>{{ start_date_dispay }}</span>
-				&nbsp ~ &nbsp
+				&nbsp; ~ &nbsp;
 				<span>{{ last_date_dispay }}</span>
 			</v-row>
 		</v-card-text>

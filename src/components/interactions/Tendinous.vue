@@ -1,15 +1,8 @@
 <template>
-	<v-col cols=8 sm=12>
+	<v-col cols=9 sm=12>
 		<v-card width=400>
-			<v-toolbar flat color="primary">
-				<v-btn @click="back" icon class='mr-n5'>
-					<v-icon>mdi-arrow-left-thick</v-icon>
-				</v-btn>
-				<v-spacer></v-spacer>
-				<v-btn @click="send" icon>
-					<v-icon>mdi-send</v-icon>
-				</v-btn>
-			</v-toolbar>
+			<v-card-title>건의하기</v-card-title>
+
 			<v-form class='mx-1'>
 				<v-text-field 
 					v-model="reply" 
@@ -46,6 +39,16 @@
 				v-show='error_view'>
 				제목과 건의사항은 필수입력 항목입니다.
 			</v-alert>
+			
+			<v-card-actions flat color="primary">
+				<v-btn @click="back" icon class='mr-n5'>
+					<v-icon color='secondary'>mdi-arrow-left-thick</v-icon>
+				</v-btn>
+				<v-spacer></v-spacer>
+				<v-btn @click="send" icon>
+					<v-icon color='secondary'>mdi-send</v-icon>
+				</v-btn>
+			</v-card-actions>
 		</v-card>
 	</v-col>
 </template>
@@ -58,6 +61,7 @@
 			content: '',
 			
 			error_view: false,
+      text: 'Hello, I\'m a snackbar',
 		}),
 		methods: {
 			send() {
@@ -67,6 +71,7 @@
 						title: this.title,
 						rating: this.content,
 					})
+					this.snackbar = true
 					this.back()
 				} else {
 					this.error_view = true

@@ -12,13 +12,16 @@
 							:value="percent" 
 							width="15" 
 							color="#7986CB"
-						><span class="font-weight-bold title":class="{'subtitle-1': $vuetify.breakpoint.xs}">{{ percent.toFixed(2) + '%' }}</span>
+						><span 
+							class="font-weight-bold title"
+							:class="{'subtitle-1': $vuetify.breakpoint.xs}"
+						>{{ percent.toFixed(2) + '%' }}</span>
 						</v-progress-circular>
 					</template>
 					<span>{{ detail_percent }}</span>
 				</v-tooltip>
 			</div>
-
+ 
 			<div class='text-center py-3'>
 				<div v-if='view_1'>
 					<v-tooltip top>
