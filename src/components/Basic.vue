@@ -27,7 +27,7 @@
             v-model="date"
             max="2020-6-31"
             color="secondary"
-            min="2013-01-01"
+            min="2011-04-12"
             @change="save_date"
             locale="ko-KR"
             :day-format="date => date.split('-')[2]"

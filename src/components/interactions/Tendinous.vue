@@ -69,7 +69,7 @@
 					firebase.firestore().collection("tend").add({
 						reply: this.reply,
 						title: this.title,
-						rating: this.content,
+						content: this.content,
 					})
 					this.snackbar = true
 					this.back()

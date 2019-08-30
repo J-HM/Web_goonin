@@ -9,7 +9,6 @@
 				></Class_chart>
 				<div class='title mb-n6 text-center'>{{ which_class(0) + ' ' + which_grade(0) }}</div>
 			</v-col>
-
 			<v-col cols=12>
 				<v-row justify='center' v-show='view' class='mb-3'>
 					<v-col cols=5>
@@ -20,12 +19,12 @@
 										color="#64B5F6" 
 										height="15" 
 										rounded 
-										:value="next_class_2.percent" 
+										:value="next_grade.percent" 
 										class='caption'
-									>{{ next_class_2.percent + '%' }}</v-progress-linear>
+									>{{ next_grade.percent + '%' }}</v-progress-linear>
 								</div>
 							</template>
-							<span>{{ which_grade(1) + '호봉까지' + next_class_2.days + '일' }}</span>
+							<span>{{ which_grade(1) + '호봉까지 ' + next_grade.days + '일' }}</span>
 						</v-tooltip>
 					</v-col>
 					<v-col cols=5>
@@ -36,17 +35,15 @@
 										color="#7986CB" 
 										height="15" 
 										rounded 
-										:value="next_class_1.percent"
+										:value="next_class.percent"
 										class='caption' 
 										v-on="on"
-										>{{ next_class_1.percent + '%' }}</v-progress-linear>
+										>{{ next_class.percent + '%' }}</v-progress-linear>
 								</div>
 							</template>
-							<span>{{ which_class(1) + '까지' + next_class_1.days + '일' }}</span>
+							<span>{{ which_class(1) + '까지 ' + next_class.days + '일' }}</span>
 						</v-tooltip>
-
 					</v-col>
-
 				</v-row>
 			</v-col>
 		</v-row>
@@ -66,7 +63,7 @@
 		
 		computed: {
 			current_class() {
-				if (this.class_arr[0] > this.current_date) { return 0 } 
+				if      (this.class_arr[0] > this.current_date) { return 0 } 
 				else if (this.class_arr[1] > this.current_date) { return 1 } 
 				else if (this.class_arr[2] > this.current_date) { return 2 } 
 				else if (this.class_arr[3] > this.current_date) { return 3 } 
@@ -77,7 +74,7 @@
 			which_class() {
 				return (val) => {
 					switch (this.current_class + val) {
-						case  0: return '입대전'
+						case  0: return '미필'
 						case  1: return '이병'
 						case  2: return '일병'
 						case  3: return '상병'
@@ -100,20 +97,20 @@
 				}
 			},
 			
-			percent() {
-				var percent_t = (this.current_date - this.start_date) / (this.last_date - this.start_date)
-				if (percent_t >= 1) { return 100 } 
-				else if (percent_t <= 0) { return 0 } 
-				else { return percent_t * 100 }
+			current_percent () {
+				var percent = (this.current_date - this.start_date) / (this.last_date - this.start_date)
+				if (percent >= 1) { return 100 } 
+				else if (percent <= 0) { return 0 } 
+				else { return percent * 100 }
 			},
 			
-			view() {
-				if (this.percent == 100) { return false } 
-				else if (this.percent == 0) { return false } 
+			view () {
+				if (this.current_percent == 100) { return false } 
+				else if (this.current_percent == 0) { return false } 
 				else { return true }
 			},
 			
-			next_class_1() {
+			next_class () {
 				var past = this.current_date.diff(this.class_arr[this.current_class - 1], 'days')
 				var sum = this.class_diff[this.current_class - 1]
 				return {
@@ -122,7 +119,7 @@
 				}
 			},
 			
-			next_class_2() {
+			next_grade () {
 				var past = this.current_date.diff((moment().startOf('month')), 'days')
 				var sum = moment().daysInMonth()
 				return {
@@ -131,23 +128,24 @@
 				}
 			},
 			
-			class_arr() {
+			class_arr () {
 				var grade_two = moment(this.start_date).add(4, 'month').startOf('month')
 				var grade_three = moment(this.start_date).add(11, 'month').startOf('month')
 				var grade_four = moment(this.start_date).add(18, 'month').startOf('month')
 				return [this.start_date, grade_two, grade_three, grade_four, this.last_date]
 			},
 			
-			class_diff() {
-				return [this.class_arr[1].diff(this.class_arr[0], 'days'), // 이병기간
+			class_diff () {
+				return [
+					this.class_arr[1].diff(this.class_arr[0], 'days'), // 이병기간
 					this.class_arr[2].diff(this.class_arr[1], 'days'), // 일병기간
 					this.class_arr[3].diff(this.class_arr[2], 'days'), // 상병기간
-					this.class_arr[4].diff(this.class_arr[3], 'days')
-				] // 병장기간
+					this.class_arr[4].diff(this.class_arr[3], 'days'), // 병장기간
+				] 
 			},
 			
-			progress_arr() {
-				return [Math.round(this.percent), Math.round(100 - this.percent)]
+			progress_arr () {
+				return [Math.round(this.current_percent), Math.round(100 - this.current_percent)]
 			},
 			
 			datacollection() {

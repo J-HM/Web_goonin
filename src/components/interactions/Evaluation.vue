@@ -45,11 +45,7 @@
 				firebase.firestore().collection("eval").add({
 					content: this.content,
 					rating: this.rating,
-				}).then(function(docRef) {
-					console.log("Document written with ID: ", docRef.id);
-				}).catch(function(error) {
-					console.error("Error adding document: ", error);
-				});
+				})
 				this.back()
 			},
 			

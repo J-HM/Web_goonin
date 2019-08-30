@@ -9,16 +9,16 @@
 							v-on="on" 
 							rotate="-90" 
 							:size="progress_size" 
-							:value="percent" 
+							:value="current_percent" 
 							width="15" 
-							color="#7986CB"
+							color="#42A5F5"
 						><span 
 							class="font-weight-bold title"
 							:class="{'subtitle-1': $vuetify.breakpoint.xs}"
-						>{{ percent.toFixed(2) + '%' }}</span>
+						>{{ current_percent.toFixed(2) + '%' }}</span>
 						</v-progress-circular>
 					</template>
-					<span>{{ detail_percent }}</span>
+					<span>{{ '.' + this.current_percent.toFixed(6).split('.')[1] }}</span>
 				</v-tooltip>
 			</div>
  
@@ -28,7 +28,7 @@
 						<template v-slot:activator="{ on }">
 							<span v-on='on' class='title'>{{ cut_day }}</span>
 						</template>
-						<span>단축전 전역일 {{ tooltip[0] }}</span>
+						<span>기존 전역일 {{ tooltip[0] }}</span>
 					</v-tooltip>
 					<span> 일 단축되어</span>
 				</div>
@@ -36,7 +36,7 @@
 					<span class='body-1'>복무기간은 </span>
 					<v-tooltip right>
 						<template v-slot:activator="{ on }">
-							<span v-on='on' class='title'>{{ past_day+future_day }}</span>
+							<span v-on='on' class='title'>{{ sum_days }}</span>
 						</template>
 						<span>{{ tooltip[1] }}</span>
 					</v-tooltip>
@@ -44,7 +44,7 @@
 				<div v-if='view_2' class='mt-1'>
 					<v-tooltip left>
 						<template v-slot:activator="{ on }">
-							<span v-on='on' class='title'>{{ past_day }}</span>
+							<span v-on='on' class='title'>{{ past_days }}</span>
 						</template>
 						<span>{{ tooltip[2] }}</span>
 					</v-tooltip>
@@ -54,7 +54,7 @@
 					<span>남은 날은 </span>
 					<v-tooltip bottom>
 						<template v-slot:activator="{ on }">
-							<span v-on='on' class='title'>{{ future_day }}</span>
+							<span v-on='on' class='title'>{{ future_days }}</span>
 						</template>
 						<span>{{ tooltip[3] }}</span>
 					</v-tooltip>
@@ -77,37 +77,34 @@
 				var third = this.get_diff(this.current_date, this.start_date)
 				var fourth = this.get_diff(this.last_date, this.current_date)
 				return [first, second, third, fourth]
-			},
+			}, // 툴팁
 			
-			past_day () {
+			past_days () {
 				return this.current_date.diff(this.start_date, 'day')
-			},
+			}, // 지난날 일수
 			
-			future_day () {
+			future_days () {
 				return this.last_date.diff(this.current_date, 'day') + 1
-			},
+			}, // 남은날 일수
 			
-			percent () {
-				var percent_t = (this.current_date - this.start_date) / (this.last_date - this.start_date);
-				if (percent_t >= 1) { return 100 } 
-				else if (percent_t <= 0) { return 0 } 
-				else { return percent_t * 100 }
-			},
+			sum_days () {
+				return this.last_date.diff(this.start_date, 'day')
+			}, // 복무기간 일수
+			
+			current_percent () {
+				var percent = this.past_days / this.sum_days
+				if (percent >= 1) { return 100 } 
+				else if (percent <= 0) { return 0 } 
+				else { return percent * 100 }
+			}, // 현재 진행 퍼센트
 			
 			progress_size () {
 				switch (this.$vuetify.breakpoint.name) {
 					case 'xs': return 110;
-					case 'sm': return 110;
+					case 'sm': return 113;
 					case 'md': return 115;
 					default: return 130;
 				}
-			},
-			
-			detail_percent () {
-				var percent = this.percent;
-				if (percent == 100) { return '수고하셨습니다.' } 
-				else if (percent == 0) { return '화이팅!' } 
-				else { return '.' + percent.toFixed(9).split('.')[1] }
 			},
 			
 			view_1 () {
@@ -116,21 +113,15 @@
 			},
 			
 			view_2 () {
-				if (this.start_date > this.current_date) { return false }
+				if (this.past_days < 0) { return false }
 				else if (this.current_date > this.last_date) { return false } 
-				else {return true }
+				else { return true }
 			},
 		},
 		
 		data: () => ({
 			current_date: moment()
 		}),
-		
-		mounted() {
-			setInterval(() => {
-				this.current_date = moment()
-			}, 2000)
-		},
 		
 		methods: {
 			get_diff: function(date1, date2) {
