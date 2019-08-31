@@ -1,4 +1,4 @@
-# GOONIN (1.0.0)
+# GOONIN (1.1.1)
 Calculate Military discharge day, promotion day, salary
 And provide Current Progress, Number of Days by Class
 
