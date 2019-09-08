@@ -126,9 +126,9 @@
 			},
 				
 			class_arr() {
-				var grade_two = moment(this.start_date).add(4, 'month').startOf('month')
-				var grade_three = moment(this.start_date).add(11, 'month').startOf('month')
-				var grade_four = moment(this.start_date).add(18, 'month').startOf('month')
+				var grade_two = moment(this.start_date).add(3, 'month').startOf('month')
+				var grade_three = moment(this.start_date).add(9, 'month').startOf('month')
+				var grade_four = moment(this.start_date).add(15, 'month').startOf('month')
 				return [this.start_date, grade_two, grade_three, grade_four, this.last_date]
 			},
 				
@@ -231,18 +231,10 @@
 				return money.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 			},
 			
-			saving_up () {
-				this.saving_month += 10000
-			},
-			saving_down () {
-				this.saving_month -= 10000
-			},
-			expense_up () {
-				this.expense_month += 10000
-			},
-			expense_down () {
-				this.expense_month -= 10000
-			},
+			saving_up () { this.saving_month += 10000 },
+			saving_down () { this.saving_month -= 10000 },
+			expense_up () { this.expense_month += 10000 },
+			expense_down () { this.expense_month -= 10000 },
 			
 			thumb (val) {
 				return val / 10000 + '만'
