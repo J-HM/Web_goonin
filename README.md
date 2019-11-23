@@ -7,10 +7,6 @@ And provide Current Progress, Number of Days by Class
 
 		goonin.info
 		
-		
-- [Project](https://goor.me/AVLN5/)
-
-		goor.me/AVLN5
 
 
 ## What i use
