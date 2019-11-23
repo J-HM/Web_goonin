@@ -9,7 +9,7 @@ And provide Current Progress, Number of Days by Class
 		
 
 
-## What i use
+## What I used
 * Node
 	+ npm
 	
